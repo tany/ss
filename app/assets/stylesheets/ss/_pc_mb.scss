@@ -1516,6 +1516,14 @@ _::-webkit-full-page-media, _:future, :root .gws-memo-message .popup-notice:befo
 #ajax-box {
   margin: 10px;
 }
+.main-title {
+  margin: 10px 2px;
+  padding-left: 12px;
+  border-left: 5px solid #555;
+  font-size: 160%;
+  font-weight: bold;
+  line-height: 1;
+}
 .main-box {
   @include box;
   padding: 15px 10px;
@@ -2281,6 +2289,9 @@ div.index {
       }
       .summary {
         color: #888;
+        &:before {
+          content: '> ';
+        }
       }
     }
     .links {
@@ -2316,6 +2327,11 @@ div.index {
       }
     }
   }
+}
+.list-foot {
+  padding: 10px;
+  border-top: $border-gray1;
+  text-align: center;
 }
 .wrap-table {
   @include mb {

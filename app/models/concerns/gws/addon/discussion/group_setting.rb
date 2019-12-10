@@ -9,12 +9,11 @@ module Gws::Addon::Discussion::GroupSetting
     field :discussion_filesize_limit, type: Integer, default: nil
     field :discussion_new_days, type: Integer
     field :discussion_unseen_interval, type: Integer
-    field :discussion_recent_limit, type: Integer, default: 5
     field :discussion_todo_limit, type: Integer, default: 5
     field :discussion_comment_limit, type: Integer, default: 1000
 
     permit_params :discussion_quota, :discussion_filesize_limit, :discussion_new_days
-    permit_params :discussion_unseen_interval, :discussion_recent_limit, :discussion_todo_limit
+    permit_params :discussion_unseen_interval, :discussion_todo_limit
     permit_params :discussion_comment_limit
   end
 

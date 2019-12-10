@@ -9,7 +9,7 @@ Gws_Discussion_Unseen.renderUnseen(
 <% end %>
 <% end %>
 
-<h2 class="gws-discussion-topic"><%= @forum.name %></h2>
+<h2 class="main-title"><%= @forum.name %></h2>
 
 <p class="gws-discussion-unseen" style="display: none;">
   <%= link_to t("gws/discussion.notice.reload"), { action: :index } %>
@@ -18,51 +18,54 @@ Gws_Discussion_Unseen.renderUnseen(
 <%= paginate @items if @items.try(:current_page) %>
 
 <div class="gws-discussion gws-discussion-thread">
-  <% @items.each do |item| %>
-    <%= form_for :item, url: { action: :reply, id: item.id }, html: { method: :put, multipart: true, autocomplete: :off } do |f| %>
-      <%= render partial: 'thread', locals: { f: f, topic: item, limit: 5, reply_menu: true } %>
-    <% end %>
-  <% end %>
-  <% if @items.blank? %>
-    <div class="addon-view">
-      <div class="addon-body">
-        <dl class="see">
-          <dd class="wide">
+  <div class="addon-view gws-discussion-navi-item">
+    <div class="addon-head"><h2><%= t('gws/discussion.topics') %></h2></div>
+    <div class="addon-body">
+      <ul class="list-items">
+        <% @items.each do |item| %>
+          <li class="list-item">
+            <% if forum = item.forum %>
+              <nav class="tap-menu">
+                <% if item.allowed?(:edit, @cur_user, site: @cur_site) %>
+                  <%= link_to t('ss.links.edit'), edit_gws_discussion_forum_topic_path(forum_id: @forum.id, id: item.id) %>
+                <% end %>
+                <% if item.allowed?(:edit, @cur_user, site: @cur_site) %>
+                  <%= link_to t('ss.links.copy'), copy_gws_discussion_forum_topic_path(forum_id: @forum.id, id: item.id) %>
+                <% end %>
+                <% if item.allowed?(:delete, @cur_user, site: @cur_site) %>
+                  <%= link_to t('ss.links.delete'), delete_gws_discussion_forum_topic_path(forum_id: @forum.id, id: item.id) %>
+                <% end %>
+              </nav>
+            <% end %>
+            <div class="info">
+              <% if item.new_flag? %><span class="gws-board-flag-new"></span><% end %>
+              <%= link_to item.name, gws_discussion_forum_topic_comments_path(forum_id: item.forum_id, topic_id: item.id, anchor: "comment-#{item.id}"), class: "title" %>
+              <div class="meta">
+                <span class="id">#<%= item.id %></span>
+                <span class="datetime"><%= item.updated.strftime("%Y/%m/%d %H:%M") %></span>
+                <span class="user"><%= item.user.try(:name) %></span>
+                <% recent = item.children.reorder(id: -1).first %>
+                <span class="summary"><%= (recent || item).text.truncate(40) %></span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+
+        <% if @items.blank? %>
+          <li class="list-item">
             <%= t("gws/discussion.notice.no_topics") %>
-          </dd>
-        </dl>
-      </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
-  <% end %>
+  </div>
   <%= paginate @items if @items.try(:current_page) %>
 </div>
 
 <div class="gws-discussion-navi">
   <% if @cur_user.gws_role_permit_any?(@cur_site, :use_private_gws_schedule_todos) %>
-    <%= render "todo", head: t("gws/schedule.tabs.my_todo"), css_class: %w(gws-discussion-navi-list my-todo), todos: @todos %>
-    <%= render "todo", head: t("gws/schedule.tabs.manageable_todo"), css_class: %w(gws-discussion-navi-list manageable-todo), todos: @manageable_todos %>
-  <% end %>
-
-  <%= render "ss/crud/addon", addon: { head: t("gws/discussion.topics"), class: "gws-discussion-navi-list", toggle: true } do %>
-    <ul class="list-items">
-      <% @recent_items.each do |item| %>
-        <li class="list-item">
-          <div class="info">
-            <% if item.new_flag? %><span class="gws-board-flag-new"></span><% end %>
-            <%= link_to item.name, gws_discussion_forum_topic_comments_path(forum_id: @forum.id, topic_id: item.id) %><br />
-            <div class="meta">
-              <% item.descendants_updated.try do |updated| %>
-                <span class="datetime"><%= updated.strftime("%Y/%m/%d %H:%M") %></span>
-              <% end %>
-            </div>
-          </div>
-        </li>
-      <% end %>
-      <% if @recent_items.blank? %>
-        <li class="list-item"><%= t("gws/discussion.notice.no_recents") %></li>
-      <% end %>
-      <li class="list-item"><%= link_to t("gws/discussion.links.topic.index"), { action: :all } %></li>
-    </ul>
+    <%= render "todo", head: t("gws/schedule.tabs.my_todo"), css_class: %w(gws-discussion-navi-item my-todo), todos: @todos %>
+    <%= render "todo", head: t("gws/schedule.tabs.manageable_todo"), css_class: %w(gws-discussion-navi-item manageable-todo), todos: @manageable_todos %>
   <% end %>
 
   <%= render "ss/crud/addon", addon: { head: t("gws/discussion.members"), toggle: true } do %>

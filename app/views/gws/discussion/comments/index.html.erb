@@ -9,6 +9,8 @@ Gws_Discussion_Unseen.renderUnseen(
 <% end %>
 <% end %>
 
+<h2 class="main-title"><%= @topic.name %></h2>
+
 <p class="gws-discussion-unseen" style="display: none; padding-bottom: 10px;">
   <%= link_to t("gws/discussion.notice.reload"), { action: :index } %>
 </p>

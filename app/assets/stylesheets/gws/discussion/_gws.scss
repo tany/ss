@@ -83,15 +83,11 @@
     float: right;
     padding-top: 10px;
   }
-  .addon-body.reply .menu .btn {
-    background: #f2d150;
-    background-image: -webkit-linear-gradient(top, #f2d150, #f2a950);
-  }
   .addon-body.reply-menu {
+    text-align: center;
     color: #b30;
     span {
-      float: right;
-      margin-right: 10px;
+      margin: 0 5px;
     }
   }
 }
@@ -103,12 +99,6 @@
     float: none;
     width: 100%;
   }
-}
-.gws-discussion-topic {
-  font-size: 180%;
-  font-weight: bold;
-  padding-bottom: 10px;
-  padding-left: 10px;
 }
 .gws-discussion-unseen {
   font-weight: bold;
@@ -123,17 +113,15 @@
     margin: 0;
     width: 100%;
   }
-
-  .gws-discussion-navi-list {
-    .addon-body {
-      padding: 0;
-    }
-  }
-
   .list-items {
     margin: 0;
   }
   .list-item {
     padding: 15px;
+  }
+}
+.gws-discussion-navi-item {
+  .addon-body {
+    padding: 0;
   }
 }

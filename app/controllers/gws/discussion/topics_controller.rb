@@ -42,7 +42,7 @@ class Gws::Discussion::TopicsController < ApplicationController
 
   def set_items
     @items = @forum.children.reorder(order: 1, created: -1).
-      page(params[:page]).per(5)
+      page(params[:page]).per(20)
 
     common_todo_criteria = Gws::Schedule::Todo.
       site(@cur_site).
@@ -56,11 +56,6 @@ class Gws::Discussion::TopicsController < ApplicationController
     @manageable_todos = common_todo_criteria.
       readable_or_manageable(@cur_user, site: @cur_site).
       not_member(@cur_user)
-
-    @recent_items = @forum.children.
-      where(:descendants_updated.gt => (Time.zone.now - @cur_site.discussion_new_days.day)).
-      reorder(descendants_updated: -1).
-      limit(@cur_site.discussion_recent_limit)
   end
 
   public

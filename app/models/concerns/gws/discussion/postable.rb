@@ -107,8 +107,8 @@ module Gws::Discussion::Postable
     ]
   end
 
-  def new_flag?
-    descendants_updated > Time.zone.now - site.discussion_new_days.day
+  def new_flag?(date = descendants_updated)
+    date > Time.zone.now - site.discussion_new_days.day
   end
 
   def save_clone(new_parent = nil)

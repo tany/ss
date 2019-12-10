@@ -4,10 +4,14 @@ ja:
     topics: スレッド
     members: 参加者
     navi:
+      portal:
+        comment: 新着コメント (スレッド別)
+        topic: 新着スレッド (作成順)
+        forum: 新着会議室 (作成順)
       forum:
         readable: 会議室一覧
       topic:
-        portal: 会議室ポータル
+        portal: 会議室トップ
         readable: スレッド一覧
       todo:
         readable: ToDo一覧
@@ -21,8 +25,8 @@ ja:
         copy: スレッドを複製する
         delete: スレッドを削除する
         index: スレッド一覧を見る
-        show: 全ての投稿を見る
-        reply: コメントを投稿する
+        show: 全てのコメントを見る
+        reply: 投稿する
       todo:
         index: ToDo一覧を見る
       member:
@@ -122,7 +126,6 @@ ja:
         discussion_filesize_limit: 添付サイズ制限
         discussion_new_days: 新着表示期間
         discussion_unseen_interval: 新着確認の間隔
-        discussion_recent_limit: 新着表示件数
         discussion_todo_limit: ToDo表示件数
         discussion_comment_limit: コメントの上限
 
@@ -189,8 +192,6 @@ ja:
         - 新着表示期間を設定します。
       discussion_unseen_interval:
         - 新着確認の間隔を設定します。
-      discussion_recent_limit:
-        - 新着一覧の表示件数を設定します。
       discussion_todo_limit:
         - ToDoの表示件数を設定します。
       discussion_comment_limit:
